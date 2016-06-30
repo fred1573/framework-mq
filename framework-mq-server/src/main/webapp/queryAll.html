@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>消息类型描述总览.</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="/js/jquery-1.9.1.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!--  plugin sources -->
+    <script src="/js/validator.min.js"></script>
+
+    <script src="/js/msgType.js"></script>
+
+    <script>
+        $(function () {
+            init();
+
+            //请求数据
+            function init() {
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '/msgType/queryMsgTypeAll',
+                    success: function (result) {
+                        var html ="";
+                        var msgTypes = result.data;
+                        $(msgTypes).each(function (i, val) {
+                            var line = "<tr><td>"+val.principal+"</td><td>"+val.system+"</td><td>"+val.msgType+"</td><td>"+val.description+"</td><tr/>";
+                            html +=line;
+                        });
+                        $("#data").html(html);
+                    }
+                });
+            }
+
+        });
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h1 align="center">消息类型描述总览</h1>
+    <br>
+    <br>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>创建人</th>
+            <th>系统</th>
+            <th>业务类型</th>
+            <th>业务类型描述</th>
+        </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
